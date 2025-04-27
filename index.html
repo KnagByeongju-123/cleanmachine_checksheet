@@ -1,5 +1,3 @@
-<!-- index.html -->
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -258,46 +256,27 @@
 
     document.getElementById('closePreview').addEventListener('click', stopQrScanner);
 
-    // 폼 제출 (fetch)
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxhSfiRxjI4_YB9QRyAIjXEtOLHgUm1-u7EjJF87S6YqVMWiceiC03xJKXAKxxLVm9w/exec';
-
-    document.getElementById('checkForm').addEventListener('submit', function(e) {
+    // --- 제출 부분만 첨부파일 소스 그대로 적용 ---
+    document.getElementById("checkForm").addEventListener("submit", function(e) {
       e.preventDefault();
+      const formData = new FormData(this);
+      const formBody = new URLSearchParams(formData);
 
-      const data = {
-        date: document.getElementById('date').value,
-        equip: document.getElementById('equipmentInput').value,
-        inspector: document.getElementById('inspector').value,
-        scanTime: document.getElementById('scanTime').value,
-        items: {},
-        memos: {},
-        comment: document.getElementById('comment').value
-      };
-      ['가','나','다','라','마','바','사','아','자','차'].forEach(key => {
-        const sel = document.querySelector(`input[name="item_${key}"]:checked`);
-        data.items[key] = sel ? sel.value : '';
-        data.memos[key] = document.getElementById(`memo_${key}`).value;
-      });
-
-      fetch(SCRIPT_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+      fetch("https://script.google.com/macros/s/AKfycbziCUjFqzHqxNXGoVVyyfYci9uyv_3tKC63hr4stXhR1fn4Ug-Cuq539FiEkCDpTa1qkA/exec", {
+        method: "POST",
+        body: formBody
       })
-      .then(res => res.text())
-      .then(msg => {
-        alert(msg);
+      .then(response => response.text())
+      .then(data => {
+        alert("제출 완료: " + data);
         this.reset();
-        document.getElementById('date').value = new Date().toISOString().slice(0,10);
-        document.getElementById('scanTime').value = '';
-        document.getElementById('barcode').value = '';
       })
-      .catch(err => {
-        console.error(err);
-        alert('제출 실패: ' + err.message);
+      .catch(error => {
+        alert("제출 실패: " + error);
       });
     });
 
+    // 페이지 로드 시 오늘 날짜 세팅
     window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('date').value = new Date().toISOString().slice(0,10);
     });
