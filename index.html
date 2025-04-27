@@ -138,7 +138,7 @@
       </div>
       <textarea id="memo_다" name="다메모" placeholder="메모 입력"></textarea>
 
-           <label>세척액 청결상태 (교체시 일자기록, 예:4/5)</label>
+      <label>세척액 청결상태 (교체시 일자기록, 예:4/5)</label>
       <div class="radio-group">
         <label><input type="radio" name="item_라" value="OK"> OK</label>
         <label><input type="radio" name="item_라" value="NG"> NG</label>
@@ -186,6 +186,7 @@
         <label><input type="radio" name="item_차" value="NG" disabled> NG</label>
       </div>
       <textarea id="memo_차" name="차메모" placeholder="메모 입력" disabled></textarea>
+
       <label>비고</label>
       <textarea id="comment" name="비고" placeholder="비고를 입력하세요"></textarea>
 
@@ -193,7 +194,7 @@
     </form>
   </div>
 
-  <div id="preview-wrapper">
+  <div id="preview-wrapper" onclick="stopQrScanner()">
     <div id="preview-container">
       <div id="preview"></div>
       <button id="closePreview">닫기</button>
