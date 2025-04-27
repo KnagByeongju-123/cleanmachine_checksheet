@@ -1,3 +1,5 @@
+<!-- index.html -->
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -114,145 +116,191 @@
   </style>
 </head>
 <body>
-<div class="container">
-  <h2 style="text-align:center; margin-bottom:16px;">설비점검 체크시트</h2>
-  <form id="checkForm">
-    <label>일자</label>
-    <input type="date" id="date" name="일자" required />
+  <div class="container">
+    <h2 style="text-align:center; margin-bottom:16px;">설비점검 체크시트</h2>
+    <form id="checkForm">
+      <label>일자</label>
+      <input type="date" id="date" name="일자" required />
 
-    <label>설비명</label>
-    <select id="equipmentInput" name="설비명" required>
-      <option value="" disabled selected>설비를 선택하세요</option>
-      <option value="1호기">1호기</option>
-      <option value="2호기">2호기</option>
-      <option value="3호기">3호기</option>
-    </select>
+      <label>설비명</label>
+      <select id="equipmentInput" name="설비명" required>
+        <option value="" disabled selected>설비를 선택하세요</option>
+        <option value="1호기">1호기</option>
+        <option value="2호기">2호기</option>
+        <option value="3호기">3호기</option>
+      </select>
 
-    <label>점검자</label>
-    <select id="inspector" name="점검자">
-      <option value="김">김정위</option>
-      <option value="이">조찬재</option>
-      <option value="박">강원철</option>
-    </select>
+      <label>점검자</label>
+      <select id="inspector" name="점검자">
+        <option value="김">김정위</option>
+        <option value="이">조찬재</option>
+        <option value="박">강원철</option>
+      </select>
 
-    <label>점검시간</label>
-    <input type="text" id="scanTime" name="점검시간" readonly placeholder="QR 스캔 시 자동 등록" />
+      <label>점검시간</label>
+      <input type="text" id="scanTime" name="점검시간" readonly placeholder="QR 스캔 시 자동 등록" />
 
-    <label>QR 코드</label>
-    <button type="button" onclick="scanQRCode('barcode')">QR 코드 스캔</button>
-    <input type="text" id="barcode" name="QR코드" readonly placeholder="스캔된 QR코드" style="display:none;" />
+      <label>QR 코드</label>
+      <button type="button" onclick="scanQRCode('barcode')">QR 코드 스캔</button>
+      <input type="text" id="barcode" name="QR코드" readonly placeholder="스캔된 QR코드" style="display:none;" />
 
-    <label>주변 정리정돈, 선입선출</label>
-    <div class="radio-group"><label><input type="radio" name="item_가" value="OK"> OK</label><label><input type="radio" name="item_가" value="NG"> NG</label></div>
-    <textarea id="memo_가" name="가메모" placeholder="메모 입력"></textarea>
+      <label>주변 정리정돈, 선입선출</label>
+      <div class="radio-group">
+        <label><input type="radio" name="item_가" value="OK"> OK</label>
+        <label><input type="radio" name="item_가" value="NG"> NG</label>
+      </div>
+      <textarea id="memo_가" name="가메모" placeholder="메모 입력"></textarea>
 
-    <label>제품별 구분, 투입전 기존품 잔량없을 것</label>
-    <div class="radio-group"><label><input type="radio" name="item_나" value="OK"> OK</label><label><input type="radio" name="item_나" value="NG"> NG</label></div>
-    <textarea id="memo_나" name="나메모" placeholder="메모 입력"></textarea>
+      <label>제품별 구분, 투입전 기존품 잔량없을 것</label>
+      <div class="radio-group">
+        <label><input type="radio" name="item_나" value="OK"> OK</label>
+        <label><input type="radio" name="item_나" value="NG"> NG</label>
+      </div>
+      <textarea id="memo_나" name="나메모" placeholder="메모 입력"></textarea>
 
-    <label>낙하품 폐기</label>
-    <div class="radio-group"><label><input type="radio" name="item_다" value="OK"> OK</label><label><input type="radio" name="item_다" value="NG"> NG</label></div>
-    <textarea id="memo_다" name="다메모" placeholder="메모 입력"></textarea>
+      <label>낙하품 폐기</label>
+      <div class="radio-group">
+        <label><input type="radio" name="item_다" value="OK"> OK</label>
+        <label><input type="radio" name="item_다" value="NG"> NG</label>
+      </div>
+      <textarea id="memo_다" name="다메모" placeholder="메모 입력"></textarea>
 
-    <label>세척액 청결상태 (교체시 일자기록, 예:4/5)</label>
-    <div class="radio-group"><label><input type="radio" name="item_라" value="OK"> OK</label><label><input type="radio" name="item_라" value="NG"> NG</label></div>
-    <textarea id="memo_라" name="라메모" placeholder="메모 입력"></textarea>
+      <label>세척액 청결상태 (교체시 일자기록, 예:4/5)</label>
+      <div class="radio-group">
+        <label><input type="radio" name="item_라" value="OK"> OK</label>
+        <label><input type="radio" name="item_라" value="NG"> NG</label>
+      </div>
+      <textarea id="memo_라" name="라메모" placeholder="메모 입력"></textarea>
 
-    <label>세척온도(33℃~45℃) (온도기록, 예:35)</label>
-    <div class="radio-group"><label><input type="radio" name="item_마" value="OK"> OK</label><label><input type="radio" name="item_마" value="NG"> NG</label></div>
-    <textarea id="memo_마" name="마메모" placeholder="메모 입력"></textarea>
+      <label>세척온도(33℃~45℃) (온도기록, 예:35)</label>
+      <div class="radio-group">
+        <label><input type="radio" name="item_마" value="OK"> OK</label>
+        <label><input type="radio" name="item_마" value="NG"> NG</label>
+      </div>
+      <textarea id="memo_마" name="마메모" placeholder="메모 입력"></textarea>
 
-    <label>세척시간(60초~180초) (시간기록, 예:65)</label>
-    <div class="radio-group"><label><input type="radio" name="item_바" value="OK"> OK</label><label><input type="radio" name="item_바" value="NG"> NG</label></div>
-    <textarea id="memo_바" name="바메모" placeholder="메모 입력"></textarea>
+      <label>세척시간(60초~180초) (시간기록, 예:65)</label>
+      <div class="radio-group">
+        <label><input type="radio" name="item_바" value="OK"> OK</label>
+        <label><input type="radio" name="item_바" value="NG"> NG</label>
+      </div>
+      <textarea id="memo_바" name="바메모" placeholder="메모 입력"></textarea>
 
-    <label>안전보호구 착용</label>
-    <div class="radio-group"><label><input type="radio" name="item_사" value="OK"> OK</label><label><input type="radio" name="item_사" value="NG"> NG</label></div>
-    <textarea id="memo_사" name="사메모" placeholder="메모 입력"></textarea>
+      <label>안전보호구 착용</label>
+      <div class="radio-group">
+        <label><input type="radio" name="item_사" value="OK"> OK</label>
+        <label><input type="radio" name="item_사" value="NG"> NG</label>
+      </div>
+      <textarea id="memo_사" name="사메모" placeholder="메모 입력"></textarea>
 
-    <label>N/A</label>
-    <div class="radio-group"><label><input type="radio" name="item_아" value="OK" disabled> OK</label><label><input type="radio" name="item_아" value="NG" disabled> NG</label></div>
-    <textarea id="memo_아" name="아메모" placeholder="메모 입력" disabled></textarea>
+      <label>N/A</label>
+      <div class="radio-group">
+        <label><input type="radio" name="item_아" value="OK" disabled> OK</label>
+        <label><input type="radio" name="item_아" value="NG" disabled> NG</label>
+      </div>
+      <textarea id="memo_아" name="아메모" placeholder="메모 입력" disabled></textarea>
 
-    <label>N/A</label>
-    <div class="radio-group"><label><input type="radio" name="item_자" value="OK" disabled> OK</label><label><input type="radio" name="item_자" value="NG" disabled> NG</label></div>
-    <textarea id="memo_자" name="자메모" placeholder="메모 입력" disabled></textarea>
+      <label>N/A</label>
+      <div class="radio-group">
+        <label><input type="radio" name="item_자" value="OK" disabled> OK</label>
+        <label><input type="radio" name="item_자" value="NG" disabled> NG</label>
+      </div>
+      <textarea id="memo_자" name="자메모" placeholder="메모 입력" disabled></textarea>
 
-    <label>N/A</label>
-    <div class="radio-group"><label><input type="radio" name="item_차" value="OK" disabled> OK</label><label><input type="radio" name="item_차" value="NG" disabled> NG</label></div>
-    <textarea id="memo_차" name="차메모" placeholder="메모 입력" disabled></textarea>
+      <label>N/A</label>
+      <div class="radio-group">
+        <label><input type="radio" name="item_차" value="OK" disabled> OK</label>
+        <label><input type="radio" name="item_차" value="NG" disabled> NG</label>
+      </div>
+      <textarea id="memo_차" name="차메모" placeholder="메모 입력" disabled></textarea>
 
-    <label>비고</label>
-    <textarea id="comment" name="비고" placeholder="비고를 입력하세요"></textarea>
+      <label>비고</label>
+      <textarea id="comment" name="비고" placeholder="비고를 입력하세요"></textarea>
 
-    <input type="submit" value="제출" />
-  </form>
-</div>
-
-<div id="preview-wrapper">
-  <div id="preview-container" onclick="stopQrScanner()">
-    <div id="preview"></div>
-    <button id="closePreview">닫기</button>
+      <input type="submit" value="제출" />
+    </form>
   </div>
-</div>
 
-<script>
-  let html5QrCodeInstance;
-  let currentScanTarget;
+  <div id="preview-wrapper">
+    <div id="preview-container" onclick="stopQrScanner()">
+      <div id="preview"></div>
+      <button id="closePreview">닫기</button>
+    </div>
+  </div>
 
-  function scanQRCode(targetId) {
-    currentScanTarget = targetId;
-    document.getElementById('preview-wrapper').style.display = 'block';
-    html5QrCodeInstance = new Html5Qrcode('preview');
-    html5QrCodeInstance.start(
-      { facingMode: 'environment' },
-      { fps: 10, qrbox: { width: 300, height: 300 } },
-      decodedText => {
-        document.getElementById(currentScanTarget).value = decodedText;
-        document.getElementById('scanTime').value = new Date().toLocaleTimeString();
-        alert(`스캔 결과: ${decodedText}`);
-        stopQrScanner();
-      },
-      err => console.warn('QR 인식 실패:', err)
-    ).catch(console.error);
-  }
+  <script>
+    let html5QrCodeInstance;
+    let currentScanTarget;
 
-  function stopQrScanner() {
-    document.getElementById('preview-wrapper').style.display = 'none';
-    if (html5QrCodeInstance) {
-      html5QrCodeInstance.stop().then(() => html5QrCodeInstance.clear()).catch(console.error);
+    function scanQRCode(targetId) {
+      currentScanTarget = targetId;
+      document.getElementById('preview-wrapper').style.display = 'block';
+      html5QrCodeInstance = new Html5Qrcode('preview');
+      html5QrCodeInstance.start(
+        { facingMode: 'environment' },
+        { fps: 10, qrbox: { width: 300, height: 300 } },
+        decodedText => {
+          document.getElementById(currentScanTarget).value = decodedText;
+          document.getElementById('scanTime').value = new Date().toLocaleTimeString();
+          alert(`스캔 결과: ${decodedText}`);
+          stopQrScanner();
+        },
+        err => console.warn('QR 인식 실패:', err)
+      ).catch(console.error);
     }
-  }
 
-  document.getElementById('closePreview').addEventListener('click', stopQrScanner);
+    function stopQrScanner() {
+      document.getElementById('preview-wrapper').style.display = 'none';
+      if (html5QrCodeInstance) {
+        html5QrCodeInstance.stop().then(() => html5QrCodeInstance.clear()).catch(console.error);
+      }
+    }
 
-  document.getElementById('checkForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const data = {
-      date: document.getElementById('date').value,
-      equip: document.getElementById('equipmentInput').value,
-      inspector: document.getElementById('inspector').value,
-      scanTime: document.getElementById('scanTime').value,
-      barcode: document.getElementById('barcode').value,
-      items: {},
-      memos: {},
-      comment: document.getElementById('comment').value
-    };
-    ['가','나','다','라','마','바','사','아','자','차'].forEach(item => {
-      const sel = document.querySelector(`input[name="item_${item}"]:checked`);
-      data.items[item] = sel ? sel.value : '';
-      data.memos[item] = document.getElementById(`memo_${item}`).value;
+    document.getElementById('closePreview').addEventListener('click', stopQrScanner);
+
+    // 폼 제출 (fetch)
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxhSfiRxjI4_YB9QRyAIjXEtOLHgUm1-u7EjJF87S6YqVMWiceiC03xJKXAKxxLVm9w/exec';
+
+    document.getElementById('checkForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const data = {
+        date: document.getElementById('date').value,
+        equip: document.getElementById('equipmentInput').value,
+        inspector: document.getElementById('inspector').value,
+        scanTime: document.getElementById('scanTime').value,
+        items: {},
+        memos: {},
+        comment: document.getElementById('comment').value
+      };
+      ['가','나','다','라','마','바','사','아','자','차'].forEach(key => {
+        const sel = document.querySelector(`input[name="item_${key}"]:checked`);
+        data.items[key] = sel ? sel.value : '';
+        data.memos[key] = document.getElementById(`memo_${key}`).value;
+      });
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.text())
+      .then(msg => {
+        alert(msg);
+        this.reset();
+        document.getElementById('date').value = new Date().toISOString().slice(0,10);
+        document.getElementById('scanTime').value = '';
+        document.getElementById('barcode').value = '';
+      })
+      .catch(err => {
+        console.error(err);
+        alert('제출 실패: ' + err.message);
+      });
     });
-    google.script.run.withSuccessHandler(msg => alert(msg)).submitCheck(data);
-  });
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const dd = String(today.getDate()).padStart(2, '0');
-    document.getElementById('date').value = `${yyyy}-${mm}-${dd}`;
-  });
-</script>
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('date').value = new Date().toISOString().slice(0,10);
+    });
+  </script>
 </body>
 </html>
