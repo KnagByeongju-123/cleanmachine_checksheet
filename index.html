@@ -6,21 +6,31 @@
   <title>설비점검체크시트</title>
   <script src="https://unpkg.com/html5-qrcode"></script>
   <style>
-    body {
-      font-family: sans-serif;
-      padding: 0;
-      margin: 0;
-      background: #f5f5f5;
-      /* 글자 크기를 60%로 줄임 (33.8px → 20.28px) */
-      font-size: 20.28px;
-    }
-    .container {
-      width: 100%;
-      max-width: 360px;    /* 폰 화면 폭에 맞춤 */
-      margin: 0 auto;
-      padding: 16px;
-      box-sizing: border-box;
-    }
+ body {
+  font-family: sans-serif;
+  padding: 0;
+  margin: 0;
+  background: #f5f5f5;
+  font-size: 20.28px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 30px 16px;
+}
+
+.form-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 800px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
     input[type="text"],
     input[type="date"],
     select,
@@ -90,6 +100,7 @@
 </head>
 <body>
   <div class="container">
+  <div class="form-card">
     <h2 style="text-align:center; margin-bottom:16px;">설비점검 체크시트</h2>
     <form id="checkForm">
       <label>일자</label>
@@ -105,9 +116,9 @@
 
       <label>점검자</label>
       <select id="inspector" name="점검자">
-        <option value="김정위">김정위</option>
-        <option value="조찬재">조찬재</option>
-        <option value="강원철">강원철</option>
+        <option value="김">김정위</option>
+        <option value="이">조찬재</option>
+        <option value="박">강원철</option>
       </select>
 
       <label>점검시간</label>
