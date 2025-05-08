@@ -216,23 +216,30 @@
     let html5QrCodeInstance;
     let currentScanTarget;
 
-    function scanQRCode(targetId) {
-      currentScanTarget = targetId;
-      const previewWrapper = document.getElementById("preview-wrapper");
-      const preview = document.getElementById("preview");
-
-      previewWrapper.style.display = "flex";
-      html5QrCodeInstance = new Html5Qrcode("preview");
-      html5QrCodeInstance.start({ facingMode: "environment" }, {
-        fps: 10,
-        qrbox: { width: 300, height: 300 }
-      }, (decodedText) => {
-        document.getElementById(currentScanTarget).value = decodedText;
-        document.getElementById('scanTime').value = new Date().toLocaleTimeString();
-        alert(`스캔 결과: ${decodedText}`);
-        stopQrScanner();
-      }, (err) => console.warn('QR 인식 실패:', err)).catch(console.error);
+        function scanQRCode(targetId) {
+      const equip = document.getElementById('equipmentInput').value.trim();
+      const previewWrapper = document.getElementById('preview-wrapper');
+      const preview = document.getElementById('preview');
+      preview.innerHTML = '';
+      previewWrapper.style.display = 'flex';
+      html5QrCodeInstance = new Html5Qrcode('preview');
+      html5QrCodeInstance.start(
+        { facingMode: 'environment' },
+        { fps: 10, qrbox: { width: 300, height: 300 } },
+        (decodedText) => {
+          // QR 리딩 결과가 설비호기와 같은 경우에만 시간 등록
+          if (decodedText.trim() === equip) {
+            document.getElementById('scanTime').value = new Date().toLocaleTimeString();
+            alert(`호기 ${equip} 매칭 - 시간 등록 완료`);
+          } else {
+            alert(`불일치: 스캔=${decodedText}, 선택호기=${equip}`);
+          }
+          stopQrScanner();
+        },
+        (err) => console.warn('QR 인식 실패:', err)
+      ).catch(console.error);
     }
+
 
     function stopQrScanner() {
       const wrapper = document.getElementById("preview-wrapper");
