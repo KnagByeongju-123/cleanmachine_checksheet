@@ -213,62 +213,66 @@
   </div>
 
   <script>
-    let html5QrCodeInstance;
-    let currentScanTarget;
+  let html5QrCodeInstance;
+  let currentScanTarget;
 
-        function scanQRCode(targetId) {
-      const equip = document.getElementById('equipmentInput').value.trim();
-      const previewWrapper = document.getElementById('preview-wrapper');
-      const preview = document.getElementById('preview');
-      preview.innerHTML = '';
-      previewWrapper.style.display = 'flex';
-      html5QrCodeInstance = new Html5Qrcode('preview');
-      html5QrCodeInstance.start(
-        { facingMode: 'environment' },
-        { fps: 10, qrbox: { width: 300, height: 300 } },
-        (decodedText) => {
-          // QR 리딩 결과가 설비호기와 같은 경우에만 시간 등록
-          if (decodedText.trim() === equip) {
-            document.getElementById('scanTime').value = new Date().toLocaleTimeString();
-            alert(`호기 ${equip} 매칭 - 시간 등록 완료`);
-          } else {
-            alert(`불일치: 스캔=${decodedText}, 선택호기=${equip}`);
-          }
-          stopQrScanner();
-        },
-        (err) => console.warn('QR 인식 실패:', err)
-      ).catch(console.error);
-    }
+  function scanQRCode(targetId) {
+    const equip = document.getElementById('equipmentInput').value.trim();
+    const previewWrapper = document.getElementById('preview-wrapper');
+    const preview = document.getElementById('preview');
+    preview.innerHTML = '';
+    previewWrapper.style.display = 'flex';
+    html5QrCodeInstance = new Html5Qrcode('preview');
+    html5QrCodeInstance.start(
+      { facingMode: 'environment' },
+      { fps: 10, qrbox: { width: 300, height: 300 } },
+      (decodedText) => {
+        if (decodedText.trim() === equip) {
+          // ✅ 한국 시간 기준 점검 시간 등록
+          const now = new Date();
+          const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+          const koreaTime = new Date(utc + (9 * 60 * 60 * 1000));
+          document.getElementById('scanTime').value = koreaTime.toLocaleTimeString('ko-KR', { hour12: false });
+          alert(`호기 ${equip} 매칭 - 시간 등록 완료`);
+        } else {
+          alert(`불일치: 스캔=${decodedText}, 선택호기=${equip}`);
+        }
+        stopQrScanner();
+      },
+      (err) => console.warn('QR 인식 실패:', err)
+    ).catch(console.error);
+  }
 
+  function stopQrScanner() {
+    const wrapper = document.getElementById("preview-wrapper");
+    wrapper.style.display = "none";
+    if (html5QrCodeInstance) html5QrCodeInstance.stop().then(() => html5QrCodeInstance.clear()).catch(console.error);
+  }
 
-    function stopQrScanner() {
-      const wrapper = document.getElementById("preview-wrapper");
-      wrapper.style.display = "none";
-      if (html5QrCodeInstance) html5QrCodeInstance.stop().then(() => html5QrCodeInstance.clear()).catch(console.error);
-    }
+  document.getElementById('closePreview').addEventListener('click', stopQrScanner);
 
-    document.getElementById('closePreview').addEventListener('click', stopQrScanner);
+  // --- 제출 부분 (변경 금지) ---
+  document.getElementById("checkForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const formBody = new URLSearchParams(formData);
+    fetch("https://script.google.com/macros/s/AKfycbwnyjb_adNhT3hxZst278neu7vZ5OxsTrwVLwBOVYfvye5XaQX6VT9tofQMx7MkrkpfXw/exec", {
+      method: "POST",
+      body: formBody
+    })
+    .then(response => response.text())
+    .then(data => { alert("제출 완료: " + data); this.reset(); })
+    .catch(error => { alert("제출 실패: " + error); });
+  });
 
-    // --- 제출 부분 (변경 금지) ---
-    document.getElementById("checkForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const formData = new FormData(this);
-      const formBody = new URLSearchParams(formData);
-      fetch("https://script.google.com/macros/s/AKfycbwnyjb_adNhT3hxZst278neu7vZ5OxsTrwVLwBOVYfvye5XaQX6VT9tofQMx7MkrkpfXw/exec", {
-        method: "POST",
-        body: formBody
-      })
-      .then(response => response.text())
-      .then(data => { alert("제출 완료: " + data); this.reset(); })
-      .catch(error => { alert("제출 실패: " + error); });
-    });
+  // ✅ 한국 시간으로 오늘 날짜 자동 세팅
+  window.addEventListener('DOMContentLoaded', () => {
+    const now = new Date();
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const koreaTime = new Date(utc + (9 * 60 * 60 * 1000));
+    document.getElementById('date').value = koreaTime.toISOString().slice(0, 10);
+  });
+</script>
 
- window.addEventListener('DOMContentLoaded', () => {
-  const now = new Date();
-  const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-  const koreaTime = new Date(utc + (9 * 60 * 60 * 1000));
-  document.getElementById('date').value = koreaTime.toISOString().slice(0, 10);
-});
-  </script>
 </body>
 </html>
